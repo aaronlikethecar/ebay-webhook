@@ -1,5 +1,5 @@
-# redeploy fix 2026-02-27
 from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 
@@ -10,10 +10,9 @@ def webhook():
     token = request.args.get("verification_token")
     if token == VERIFICATION_TOKEN:
         return VERIFICATION_TOKEN, 200
-
     return jsonify({"status": "ok"}), 200
 
 if __name__ == "__main__":
-    import os
     port = int(os.environ.get("PORT", 8000))
-    app.run(host="0.0.0.0", port=port)
+    # Use threaded=True to prevent Gunicorn sync worker issues
+    app.run(host="0.0.0.0", port=port, threaded=True)
