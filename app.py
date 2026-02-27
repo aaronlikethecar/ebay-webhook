@@ -6,12 +6,10 @@ VERIFICATION_TOKEN = "this_is_my_scraper_token_ebay_pls"
 
 @app.route("/", methods=["GET", "POST"])
 def webhook():
-    # eBay GET verification
     token = request.args.get("verification_token")
     if token == VERIFICATION_TOKEN:
-        return VERIFICATION_TOKEN, 200  # must return token exactly
+        return VERIFICATION_TOKEN, 200
 
-    # Normal webhook POST logic
     return jsonify({"status": "ok"}), 200
 
 if __name__ == "__main__":
